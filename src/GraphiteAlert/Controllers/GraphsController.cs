@@ -10,15 +10,26 @@ namespace GraphiteAlert.Controllers
 
         public ItemCollection<GraphDto> GetAll()
         {
-            return new ItemCollection<GraphDto>()
+            return new ItemCollection<GraphDto>
             {
                 Items = new []
+                {
+                    new GraphDto{Title = ""}, 
+                    new GraphDto()
+                }
+            };
+        }
+
+        public ItemCollection<GraphDto> Get(string q = null)
+        {
+            return new ItemCollection<GraphDto>()
+            {
+                Items = new[]
                 {
                     new GraphDto(), 
                     new GraphDto()
                 }
             };
-        } 
-
+        }
     }
 }

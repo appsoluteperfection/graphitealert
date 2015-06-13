@@ -20,7 +20,7 @@ using GraphiteAlert.Results;
 namespace GraphiteAlert.Controllers
 {
     [Authorize]
-    [RoutePrefix("api/Account")]
+    [RoutePrefix("api/jnmk;")]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";

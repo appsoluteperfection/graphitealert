@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphiteAlert", "GraphiteAl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphiteAlert.Tests", "GraphiteAlert.Tests\GraphiteAlert.Tests.csproj", "{C589D769-58FB-4AC7-9213-C19C52510035}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphiteAlert.Infrastructure", "GraphiteAlert.Infrastructure\GraphiteAlert.Infrastructure.csproj", "{124212DD-A0BF-45FB-8DD0-30809F3FA738}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C589D769-58FB-4AC7-9213-C19C52510035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C589D769-58FB-4AC7-9213-C19C52510035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C589D769-58FB-4AC7-9213-C19C52510035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{124212DD-A0BF-45FB-8DD0-30809F3FA738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{124212DD-A0BF-45FB-8DD0-30809F3FA738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{124212DD-A0BF-45FB-8DD0-30809F3FA738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{124212DD-A0BF-45FB-8DD0-30809F3FA738}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

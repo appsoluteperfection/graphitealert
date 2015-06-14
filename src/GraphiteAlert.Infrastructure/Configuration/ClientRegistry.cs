@@ -7,7 +7,7 @@ namespace GraphiteAlert.Infrastructure.Configuration
     {
         public ClientRegistry()
         {
-            For<IGraphiteClient>().Use<GraphiteClient>();
+            For<IGraphiteClient>().Use<CachedGraphiteClient>();
             For<IGraphiteResourcesCache>().Singleton().Use<GraphiteResourcesCache>();
         }
     }

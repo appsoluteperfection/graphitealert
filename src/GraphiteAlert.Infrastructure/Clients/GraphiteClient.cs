@@ -20,14 +20,14 @@ namespace GraphiteAlert.Infrastructure.Clients
 
         public IEnumerable<GraphiteGraphDto> GetAll()
         {
-            var allFromRoot = GetAllFromRoot(); // TODO, cache
+            var allFromRoot = GetAllFromRoot();
             return allFromRoot;
         }
 
         public IEnumerable<GraphiteGraphDto> Get(string searchQuery)
         {
             var all = GetAll();
-            return GetAll()
+            return all
                 .Where(x => x != null && x.Id != null)
                 .Where(x => x.Id.ToLower().Contains(searchQuery));
         }
@@ -57,6 +57,10 @@ namespace GraphiteAlert.Infrastructure.Clients
             if (!results.Any())
             {
                 yield return dto;
+            }
+            else if (results.Count() > _graphiteSettings.MaximumGraphiteChildrenToSeek)
+            {
+                yield break; // too many results to process
             }
             else
             {

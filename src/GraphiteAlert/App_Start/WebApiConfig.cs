@@ -26,7 +26,8 @@ namespace GraphiteAlert
             );
 
             // Default to json
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            var jsonMediaTypeFormatter = config.Formatters.JsonFormatter;
+            jsonMediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
 
         

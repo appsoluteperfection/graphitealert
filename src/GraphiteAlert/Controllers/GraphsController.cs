@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Web.Http;
 using GraphiteAlert.Dtos;
 using GraphiteAlert.Infrastructure.Queries;
 
@@ -16,13 +17,14 @@ namespace GraphiteAlert.Controllers
 
         public ItemCollection<GraphDto> Get(string q = null)
         {
-            return new ItemCollection<GraphDto>()
+            var dtos = _graphQuery.GetAll();
+            var graphs = dtos.Select(x => new GraphDto
             {
-                Items = new[]
-                {
-                    new GraphDto(), 
-                    new GraphDto()
-                }
+                Id = x.Id
+            });
+            return new ItemCollection<GraphDto>
+            {
+                Items = graphs
             };
         }
     }

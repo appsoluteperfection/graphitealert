@@ -51,6 +51,8 @@
     <Compile Include="Clients\GraphiteClient.cs" />
     <Compile Include="Configuration\ClientRegistry.cs" />
     <Compile Include="Configuration\DefaultRegistry.cs" />
+    <Compile Include="Configuration\GraphiteSettings.cs" />
+    <Compile Include="Configuration\IGraphiteSettings.cs" />
     <Compile Include="Configuration\QueryRegistry.cs" />
     <Compile Include="Entities\Graph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

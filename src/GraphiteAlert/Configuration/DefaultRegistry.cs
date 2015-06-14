@@ -1,4 +1,5 @@
-﻿using StructureMap.Configuration.DSL;
+﻿using GraphiteAlert.Infrastructure.Configuration;
+using StructureMap.Configuration.DSL;
 
 namespace GraphiteAlert.Configuration
 {
@@ -7,6 +8,9 @@ namespace GraphiteAlert.Configuration
         public DefaultRegistry()
         {
             For<ISettings>().Singleton().Use(() => Settings.Instance);
+            For<IGraphiteSettings>()
+                .Singleton()
+                .Use(c => new GraphiteSettings(c.GetInstance<ISettings>().GraphiteBaseUrl));
             IncludeRegistry<Infrastructure.Configuration.DefaultRegistry>();
         }
     }

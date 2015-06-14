@@ -1,4 +1,5 @@
-﻿using GraphiteAlert.Extensions;
+﻿using System.Configuration;
+using GraphiteAlert.Extensions;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +12,7 @@ namespace GraphiteAlert.Configuration
 {
     public class Settings : ISettings
     {
-        private const string SettingsFileName = @"GraphiteAlert\Configuration\settings.json";
+        private const string SettingsFileName = @"Configuration\settings.json";
         private static readonly Lazy<ISettings> LazyInstance = new Lazy<ISettings>(GetInstance);
 
         public static ISettings Instance
@@ -37,6 +38,7 @@ namespace GraphiteAlert.Configuration
             {
                 var candidateDirectories = new Func<string>[]
                 {
+                    () => ConfigurationManager.AppSettings["SettingsPath"],
                     () => HttpRuntime.AppDomainAppPath,
                     () => AppDomain.CurrentDomain.SetupInformation.ConfigurationFile,
                     () => Environment.CurrentDirectory,
@@ -56,7 +58,7 @@ namespace GraphiteAlert.Configuration
                         return null;
                     }
                 })
-                .Where(x => null != x)
+                .Where(x => !string.IsNullOrWhiteSpace(x))
                 .ToArray();
                 var removeBinDirectories = candidateDirectories.Where(x => x.Contains("bin"))
                     .Select(x => x.ToLower().Replace(@"\bin", "").Replace(@"\debug", "").Replace(@"\release", ""));
@@ -67,20 +69,27 @@ namespace GraphiteAlert.Configuration
                     .ToArray();
                 var baseRunningDirectories = runningDirectories.Select(Path.GetDirectoryName);
                 var directories = runningDirectories
-                    .Concat(baseRunningDirectories);
+                    .Concat(baseRunningDirectories)
+                    .ToArray();
                 var settingsPaths = directories
                     .Select(directory =>
                     {
                         if (!Directory.Exists(directory)) return null;
                         var filePath = Path.Combine(directory, SettingsFileName);
                         return !File.Exists(filePath) ? null : filePath;
-                        
-                    });
-                return settingsPaths
+
+                    })
                     .Where(x => x != null)
+                    .ToArray();
+                var path = settingsPaths
                     .Select(x => x.Trim())
-                    .FirstOrDefault()
-                    ;
+                    .FirstOrDefault();
+                if (null == path)
+                {
+                    var paths = string.Join(Environment.NewLine, directories.ToArray());
+                    throw new FileNotFoundException("Could not find a config file after seeking the following paths: " + paths);
+                }
+                return path;
             }
         }
 

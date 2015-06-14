@@ -1,0 +1,1 @@
+xcopy /y /q /e ..\GraphiteAlert {DeployPath} /exclude:exclude.txt

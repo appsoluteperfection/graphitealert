@@ -196,3 +196,4 @@ FakesAssemblies/
 *.opt
 src/GraphiteAlert/Configuration/settings.json
 src/GraphiteAlert/GraphiteGraphs.json
+src/Deployment/deploy.bat

@@ -7,6 +7,7 @@ namespace GraphiteAlert.Configuration
         public DefaultRegistry()
         {
             For<ISettings>().Singleton().Use(() => Settings.Instance);
+            IncludeRegistry<Infrastructure.Configuration.DefaultRegistry>();
         }
     }
 }

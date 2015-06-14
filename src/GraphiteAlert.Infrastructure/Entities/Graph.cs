@@ -2,6 +2,7 @@
 {
     public class Graph
     {
-         
+        public string Id { get; set; }
+        
     }
 }

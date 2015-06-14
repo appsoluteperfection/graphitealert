@@ -16,6 +16,11 @@ namespace GraphiteAlert.Infrastructure.Configuration
             return new Uri(_baseUri, "metrics/json/find?query=" + searchText);
         }
 
+        public Uri GetImageUri(string graphId)
+        {
+            return new Uri(_baseUri, "render/?target=" + graphId);
+        }
+
         public int MaximumGraphiteChildrenToSeek { get { return 37; } }
     }
 }

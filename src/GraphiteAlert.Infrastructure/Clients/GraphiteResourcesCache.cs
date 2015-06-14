@@ -22,14 +22,30 @@ namespace GraphiteAlert.Infrastructure.Clients
         {
             get
             {
-                return _caches
+                var firstCache = _caches
                     .Select(x => x.Items)
                     .FirstOrDefault(x => null != x);
+                if (null == firstCache) return null;
+                var graphDtos = 
+                    firstCache as GraphiteGraphDto[] ?? firstCache.ToArray();
+                if (_caches.Any(x => null == x))
+                {
+                    Items = graphDtos;
+                }
+                return graphDtos;
             }
             set
             {
-                _caches.ToList().ForEach(x => x.Items = value);
+                foreach (var cache in _caches)
+                {
+                    lock (_cacheUpdateLock)
+                    {
+                        cache.Items = value.Select(x => x).ToArray();
+                    }
+                }
             }
         }
+
+        private readonly object _cacheUpdateLock = new object();
     }
 }

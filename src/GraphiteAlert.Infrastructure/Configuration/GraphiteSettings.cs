@@ -16,6 +16,6 @@ namespace GraphiteAlert.Infrastructure.Configuration
             return new Uri(_baseUri, "metrics/json/find?query=" + searchText);
         }
 
-        public int MaximumGraphiteChildrenToSeek { get { return 10; } }
+        public int MaximumGraphiteChildrenToSeek { get { return 37; } }
     }
 }

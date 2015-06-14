@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="Clients\Dtos\GraphiteGraphDto.cs" />
     <Compile Include="Clients\GraphiteClient.cs" />
+    <Compile Include="Clients\GraphiteResourcesCache.cs" />
+    <Compile Include="Clients\IGraphiteResourcesCache.cs" />
     <Compile Include="Configuration\ClientRegistry.cs" />
     <Compile Include="Configuration\DefaultRegistry.cs" />
     <Compile Include="Configuration\GraphiteSettings.cs" />

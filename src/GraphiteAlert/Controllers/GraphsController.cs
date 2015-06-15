@@ -21,7 +21,7 @@ namespace GraphiteAlert.Controllers
 
         public ItemCollection<GraphDto> Get(string q = null)
         {
-            var dtos = _graphQuery.GetAll();
+            var dtos = _graphQuery.Get(q);
             var graphs = dtos.Select(x => new GraphDto
             {
                 Id = x.Id,

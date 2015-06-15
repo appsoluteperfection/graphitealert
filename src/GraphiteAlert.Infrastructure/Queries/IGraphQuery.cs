@@ -5,6 +5,6 @@ namespace GraphiteAlert.Infrastructure.Queries
 {
     public interface IGraphQuery
     {
-        IEnumerable<Graph> GetAll();
+        IEnumerable<Graph> Get(string filter = null);
     }
 }

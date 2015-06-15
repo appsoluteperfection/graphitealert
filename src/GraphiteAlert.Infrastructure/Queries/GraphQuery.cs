@@ -14,9 +14,9 @@ namespace GraphiteAlert.Infrastructure.Queries
             _graphiteClient = graphiteClient;
         }
 
-        public IEnumerable<Graph> GetAll()
+        public IEnumerable<Graph> Get(string filter = null)
         {
-            var allGraphs = _graphiteClient.GetAll();
+            var allGraphs = _graphiteClient.Get(filter);
             return allGraphs.Select(x => new Graph
             {
                 Id = x.Id

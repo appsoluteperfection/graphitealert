@@ -2,6 +2,8 @@
 using GraphiteAlert.Configuration.DependencyResolution;
 using Microsoft.Owin.Security.OAuth;
 using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace GraphiteAlert
 {
@@ -26,6 +28,9 @@ namespace GraphiteAlert
             );
 
             // Default to json
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
+            config.Formatters.JsonFormatter.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.RoundtripKind;
             var jsonMediaTypeFormatter = config.Formatters.JsonFormatter;
             jsonMediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }

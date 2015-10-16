@@ -21,6 +21,6 @@ namespace GraphiteAlert.Infrastructure.Configuration
             return new Uri(_baseUri, "render/?target=" + graphId);
         }
 
-        public int MaximumGraphiteChildrenToSeek { get { return 37; } }
+        public int MaximumGraphiteChildrenToSeek { get { return 137; } }
     }
 }

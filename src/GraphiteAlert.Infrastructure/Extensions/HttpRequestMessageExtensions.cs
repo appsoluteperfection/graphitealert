@@ -13,7 +13,7 @@ namespace GraphiteAlert.Infrastructure.Extensions
             };
             var httpClient = new HttpClient(handler)
             {
-                Timeout = TimeSpan.FromSeconds(30)
+                Timeout = TimeSpan.FromSeconds(120)
             };
             var sendAsync = httpClient.SendAsync(request);
             return sendAsync.Result;

@@ -70,7 +70,7 @@
     <Compile Include="Configuration\IGraphiteSettings.cs" />
     <Compile Include="Configuration\QueryRegistry.cs" />
     <Compile Include="Entities\Graph.cs" />
-    <Compile Include="Extensions\WebRequestExtensions.cs" />
+    <Compile Include="Extensions\HttpRequestMessageExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clients\IGraphiteClient.cs" />
     <Compile Include="Queries\GraphQuery.cs" />

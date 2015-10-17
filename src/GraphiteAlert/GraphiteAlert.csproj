@@ -228,11 +228,13 @@
     <Compile Include="Configuration\ISettings.cs" />
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="ControllerRegistry.cs" />
+    <Compile Include="Controllers\DataPointsController.cs" />
     <Compile Include="Controllers\GraphsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Configuration\DependencyResolution\DependencyResolver.cs" />
+    <Compile Include="Dtos\DataPoint.cs" />
     <Compile Include="Dtos\GraphDto.cs" />
     <Compile Include="Dtos\ItemCollection.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />

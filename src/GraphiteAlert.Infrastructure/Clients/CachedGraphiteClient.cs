@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GraphiteAlert.Infrastructure.Clients.Dtos;
@@ -37,6 +38,11 @@ namespace GraphiteAlert.Infrastructure.Clients
             return GetAll()
                 .Where(x => x != null && x.Id != null)
                 .Where(x => x.Id.ToLower().Contains(searchQuery));
+        }
+
+        public IEnumerable<Tuple<dynamic, dynamic>> GetDataPoints(string collection)
+        {
+            return _graphiteClient.GetDataPoints(collection);
         }
     }
 }

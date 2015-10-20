@@ -1,4 +1,5 @@
-﻿using GraphiteAlert.Infrastructure.Clients.Dtos;
+﻿using System;
+using GraphiteAlert.Infrastructure.Clients.Dtos;
 using GraphiteAlert.Infrastructure.Configuration;
 using GraphiteAlert.Infrastructure.Extensions;
 using Newtonsoft.Json;
@@ -16,6 +17,7 @@ namespace GraphiteAlert.Infrastructure.Clients
         public GraphiteClient(IGraphiteSettings graphiteSettings)
         {
             _graphiteSettings = graphiteSettings;
+   
         }
 
         public IEnumerable<GraphiteGraphDto> GetAll()
@@ -32,6 +34,45 @@ namespace GraphiteAlert.Infrastructure.Clients
                 .Where(x => x.Id.ToLower().Contains(searchQuery));
         }
 
+        public IEnumerable<Tuple<dynamic, dynamic>> GetDataPoints(string collection)
+        {
+            var response = GetResponse(
+                new Uri(
+                    "http://graphite.local.uship.com/render?from=-6h&target=carbon.agents.*.*&title=My%20First%20Graph&rawData=true"));
+            var body = response.Content.ReadAsStringAsync().Result;
+            var collections = body.Split('\n');
+            var collectionDetails = collections.Select(s => s.Split('|'))
+                .Select(d => new {LeftSide = d.ElementAt(0).Split(','), RightSide = d.ElementAt(1).Split(',')})
+                .Select(
+                    whole =>
+                        new
+                        {
+                            name = whole.LeftSide.ElementAt(0),
+                            startingX = whole.LeftSide.ElementAt(1),
+                            interval = whole.LeftSide.ElementAt(3),
+                            dataPoints = whole.RightSide
+                        });
+            var nameDataPoints = collectionDetails.Select(d => new
+            {
+                name = d.name,
+                datapoints = GetDataPointsFor(d.dataPoints, d.startingX, d.interval)
+            });
+
+            return nameDataPoints.First().datapoints;
+        }
+
+        private IEnumerable<Tuple<dynamic, dynamic>> GetDataPointsFor(IEnumerable<Object> dataPoints, object startingX, object interval)
+        {
+            var startingXValue = Double.Parse(startingX.ToString());
+            var intervalValue = Double.Parse((interval.ToString()));
+            for (int i = 0; i < dataPoints.Count(); i++)
+            {
+                var x = startingXValue + intervalValue*i;
+                var y = dataPoints.ElementAt(i);
+                yield return new Tuple<dynamic, dynamic>(x, y);
+            }
+        }
+
         private IEnumerable<GraphiteGraphDto> GetAllFromRoot()
         {
             return GetAllFrom();
@@ -40,16 +81,8 @@ namespace GraphiteAlert.Infrastructure.Clients
         private IEnumerable<GraphiteGraphDto> GetAllFrom(GraphiteGraphDto dto = null)
         {
             var q = dto == null ? "*" : dto.Id + ".*";
-            var request = new HttpRequestMessage(HttpMethod.Get, _graphiteSettings.GetSearchUri(q));
-            HttpResponseMessage response = null;
-            try
-            {
-                response = request.GetResponse();
-            }
-            catch
-            {
-                // TODO Not sure what to do with these now 
-            }
+            Uri requestUri = _graphiteSettings.GetSearchUri(q);
+            var response = GetResponse(requestUri);
             if (null == response) yield break; // Bad response, prolly should not have these, but oh well for now
             if (HttpStatusCode.OK != response.StatusCode) yield break; // No bad children
             var json = response.Content.ReadAsStringAsync().Result;
@@ -72,5 +105,19 @@ namespace GraphiteAlert.Infrastructure.Clients
             }
         }
 
+        private static HttpResponseMessage GetResponse(Uri requestUri)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+            HttpResponseMessage response = null;
+            try
+            {
+                response = request.GetResponse();
+            }
+            catch
+            {
+                // TODO Not sure what to do with these now 
+            }
+            return response;
+        }
     }
 }
